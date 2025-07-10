@@ -30,6 +30,7 @@ export default function SubmissionForm({
   const validate = () => {
     const errs = {};
     if (!form.fullName.trim()) errs.fullName = 'Required';
+    
     if (!/\S+@\S+\.\S+/.test(form.email)) errs.email = 'Invalid email';
     if (!/^\d{10}$/.test(form.phoneNumber.replace(/\D/g, '')))
       errs.phoneNumber = 'Enter 10 digits';
@@ -98,6 +99,7 @@ export default function SubmissionForm({
         value={form.address}
         onChange={(e) => setForm({ ...form, address: e.target.value })}
       />
+      
 
       <label htmlFor="preferredContact">Preferred Contact*</label>
       <select
