@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import SubmissionForm from './components/SubmissionForm';
 import SubmissionsTable from './components/SubmissionsTable';
+// const API_BASE = "https://mw24u3yry6.execute-api.us-east-1.amazonaws.com/prod";
+const API_BASE = "https://xaywh30zr8.execute-api.us-east-1.amazonaws.com/production";
 
 export default function App() {
   const [submissions, setSubmissions] = useState([]);
@@ -8,7 +10,8 @@ export default function App() {
 
   const fetchAll = async () => {
     try {
-      const res = await fetch('/api/submissions');
+      console.log("Fetching from:", `${API_BASE}/api/submissions`);
+      const res = await fetch(`${API_BASE}/api/submissions`);
       if (!res.ok) throw new Error(res.statusText);
       setSubmissions(await res.json());
     } catch (err) {
@@ -22,7 +25,7 @@ export default function App() {
 
   const handleCreate = async (data) => {
     try {
-      const res = await fetch('/api/submissions', {
+      const res = await fetch(`${API_BASE}/api/submissions`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
@@ -39,7 +42,7 @@ export default function App() {
 
   const handleUpdate = async (id, data) => {
     try {
-      const res = await fetch(`/api/submissions/${id}`, {
+      const res = await fetch(`${API_BASE}/api/submissions/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
@@ -58,7 +61,7 @@ export default function App() {
   const handleDelete = async (id) => {
     if (!window.confirm('Really delete?')) return;
     try {
-      const res = await fetch(`/api/submissions/${id}`, {
+      const res = await fetch(`${API_BASE}/api/submissions/${id}`, {
         method: 'DELETE',
       });
       if (!res.ok) throw new Error(res.statusText);
