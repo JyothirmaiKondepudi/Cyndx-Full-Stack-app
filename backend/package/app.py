@@ -101,7 +101,7 @@ def create_app(config_class = DevelopmentConfig):
         if Submission.query.filter_by(email=data["email"]).first():
             return jsonify({
                 "error":"Conflict",
-                "message":f"Emaily already exists: {data["email"]}",
+                "message":f"Email already exists: {data['email']}",
                 "status":409
             }),409
         newSubmission = Submission(
