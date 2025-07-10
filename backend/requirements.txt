@@ -1,0 +1,7 @@
+flask
+python-dotenv
+pg8000
+flask_sqlalchemy
+flask_cors
+aws-wsgi
+boto3
