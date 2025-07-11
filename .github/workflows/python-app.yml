@@ -53,13 +53,13 @@ jobs:
         npm ci
         npm run build
     - name: Sync build/ → S3
-        run: |
+      run: |
           aws s3 sync ./frontend/build s3://cyndx-frontend-code \
             --delete \
             --acl public-read
 
     - name: Invalidate CloudFront cache
-        run: |
+      run: |
           aws cloudfront create-invalidation \
             --distribution-id EIGCCJJDPKNAU \
             --paths '/*'
