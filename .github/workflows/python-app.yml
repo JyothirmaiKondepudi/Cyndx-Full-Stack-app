@@ -54,9 +54,7 @@ jobs:
         npm run build
     - name: Sync build/ → S3
       run: |
-          aws s3 sync ./frontend/build s3://cyndx-frontend-code \
-            --delete \
-            --acl public-read
+          aws s3 sync ./frontend/build s3://cyndx-frontend-code --delete
 
     - name: Invalidate CloudFront cache
       run: |
