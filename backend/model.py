@@ -14,7 +14,7 @@ class Submission(db.Model): # tells the SQL-ALCHEMY to trat this as a table not 
     phoneNumber = Column("phone_number",String(10), nullable = False)
     preferredContact = Column("preferred_contact",String,nullable=False)
     age = Column("age",Integer, nullable=False)
-    address = Column("address",String,nullable=False)
+    address = Column("address",String)
     createdAt = Column("created_at",DateTime, default= datetime.now)
     updatedAt = Column("updated_at",DateTime, default= datetime.now,onupdate=datetime.now)
     

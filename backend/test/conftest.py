@@ -1,14 +1,13 @@
 import pytest
 from app import create_app
 from model import Submission, db as _db
-import pytest
 import os
 from config import TestingConfig
 
 @pytest.fixture
 def app():
-    os.getenv["FLASK_ENV"] = "testing"
-    app = create_app()
+    os.environ["FLASK_ENV"] = "testing"
+    app = create_app(TestingConfig)
     app.config['TESTING'] = True
 
     with app.app_context():
@@ -30,6 +29,7 @@ def test_db(app):
         submission1.phoneNumber ="1111111111"
         submission1.preferredContact = "email"
         submission1.email="test1@test.com"
+        submission1.address = "test ave, test city"
 
         submission2 = Submission()
         submission2.fullName ="test2 test"
@@ -37,6 +37,7 @@ def test_db(app):
         submission2.phoneNumber ="9999999999"
         submission2.preferredContact = "both"
         submission2.email="test2@test.com"
+        submission2.address="test ave, test city, test state"
 
         _db.session.add_all([submission1,submission2])
         _db.session.commit()

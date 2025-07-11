@@ -16,13 +16,15 @@ def test_update_submission_by_id(client,test_db):
         "age":20,
         "phoneNumber":"1111111111",
         "preferredContact":"both",
-        "email":"test11@test.com"
+        "email":"test11@test.com",
+        "address":"12 test ave, test city"
     }
     response = client.put("/api/submissions/1", json = payload)
     data = response.get_json()
     assert data["fullName"]==payload["fullName"]
     assert data["preferredContact"]==payload["preferredContact"]
     assert data["email"]==payload["email"]
+    assert data["address"]==payload["address"]
 
 def test_create_submission(client,test_db):
     payload = {
@@ -30,7 +32,8 @@ def test_create_submission(client,test_db):
         "age":27,
         "phoneNumber":"3333333333",
         "preferredContact":"phone",
-        "email":"test3@test.com"
+        "email":"test3@test.com",
+        "address":"123 test ave"
     }
     response = client.post("/api/submissions",json=payload)
     data = response.get_json()
