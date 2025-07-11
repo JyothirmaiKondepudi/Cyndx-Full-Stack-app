@@ -1,13 +1,12 @@
 import pytest
 from app import create_app
 from model import Submission, db as _db
-import pytest
 import os
 from config import TestingConfig
 
 @pytest.fixture
 def app():
-    os.getenv["FLASK_ENV"] = "testing"
+    os.environ["FLASK_ENV"] = "testing"
     app = create_app()
     app.config['TESTING'] = True
 
