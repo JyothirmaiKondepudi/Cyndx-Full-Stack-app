@@ -84,7 +84,7 @@ jobs:
       run : |
           aws lambda invoke\
             --function-name form_management_service \
-            --cli-binary-format raw-in-base64-out
-            --payload '{}'
+            --cli-binary-format raw-in-base64-out\
+            --payload '{}' \
             response.json
       
