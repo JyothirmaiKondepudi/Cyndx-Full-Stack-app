@@ -73,6 +73,7 @@ jobs:
           docker tag flask-backend:latest $IMAGE_URI
     - name : 
       run: |
+          IMAGE_URI=${{ secrets.ECR_REGISTRY }}/flask-backend:${{ github.sha }}
           docker push $IMAGE_URI
 
       
