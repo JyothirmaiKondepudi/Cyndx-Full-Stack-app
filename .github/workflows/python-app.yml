@@ -72,6 +72,6 @@ jobs:
           docker tag flask-backend:latest ${{secrets.ECR_REGISTRY}}/${{ github.sha }}
     - name : 
       run: |
-          docker push ${{secrets.ECR_REGISTRY}}/${{ github.sha }}
+          docker push ${{secrets.ECR_REGISTRY}}/flask-backend:${{ github.sha }}
 
       
