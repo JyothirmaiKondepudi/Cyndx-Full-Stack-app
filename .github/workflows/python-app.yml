@@ -75,5 +75,10 @@ jobs:
       run: |
           IMAGE_URI=${{ secrets.ECR_REGISTRY }}/flask-backend:${{ github.sha }}
           docker push $IMAGE_URI
+    - name :
+      run : |
+          aws lambda update-function-code \
+      --function-name formServiceFunction \
+      --image-uri ${{ secrets.ECR_REGISTRY }}/flask-backend:${{ github.sha }}
 
       
