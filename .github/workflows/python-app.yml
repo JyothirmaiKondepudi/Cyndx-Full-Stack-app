@@ -80,5 +80,10 @@ jobs:
           aws lambda update-function-code \
             --function-name form_management_service \
             --image-uri ${{ secrets.ECR_REGISTRY }}/flask-backend:${{ github.sha }}
-
+    - name : Invoke Lambda for testing purpose
+      run : |
+          aws lambda invoke\
+            -- functiona-name form_management_service \
+            --payload '{}'
+            response.json
       
