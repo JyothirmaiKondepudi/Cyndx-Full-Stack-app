@@ -61,4 +61,8 @@ jobs:
           aws cloudfront create-invalidation \
             --distribution-id EIGCCJJDPKNAU \
             --paths '/*'
+    - name: Login to ECR
+      run : |
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{secrets.ECR_REGISTRY}}
+      
 
