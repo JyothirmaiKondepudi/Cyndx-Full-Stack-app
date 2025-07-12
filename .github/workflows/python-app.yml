@@ -65,6 +65,7 @@ jobs:
       run : |
           aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{secrets.ECR_REGISTRY}}
     - name : Build Docker Image
+      working-directory: ./backend
       run: |
           docker build -t flask-backend .
     - name: Tag Docker Image
