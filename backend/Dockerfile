@@ -4,10 +4,12 @@ WORKDIR /app
 
 COPY requirements.txt ./
 
+RUN pip install awslambdaric
+
 RUN pip install -r requirements.txt
 
 COPY . .
 
 EXPOSE 5000
-
+ENTRYPOINT ["awslambdaric"]
 CMD ["lambda_handler.lambda_handler"]
