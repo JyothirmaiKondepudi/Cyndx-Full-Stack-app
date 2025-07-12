@@ -90,6 +90,6 @@ jobs:
     - name: Invoke API Gateway
       run : |
           curl -X GET \
-            "https://xaywh30zr8.execute-api.<region>.amazonaws.com/production/api/submissions" \
+            "https://xaywh30zr8.execute-api.us-east-1.amazonaws.com/production/api/submissions" \
             -H "Content-Type: application/json"
      
