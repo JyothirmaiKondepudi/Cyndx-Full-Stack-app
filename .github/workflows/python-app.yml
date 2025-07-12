@@ -87,4 +87,9 @@ jobs:
             --cli-binary-format raw-in-base64-out\
             --payload '{}' \
             response.json
-      
+    - name: Invoke API Gateway
+      run : |
+          CURL -X GET \ 
+            https://xaywh30zr8.execute-api.us-east-1.amazonaws.com/production/api/submissions
+            -H "Content-Type: application/json" \
+            -d '{}'      
