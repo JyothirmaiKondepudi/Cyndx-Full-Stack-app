@@ -78,7 +78,7 @@ jobs:
     - name : Deploy docker image into lambda
       run : |
           aws lambda update-function-code \
-      --function-name formServiceFunction \
-      --image-uri ${{ secrets.ECR_REGISTRY }}/flask-backend:${{ github.sha }}
+            --function-name formServiceFunction \
+            --image-uri ${{ secrets.ECR_REGISTRY }}/flask-backend:${{ github.sha }}
 
       
