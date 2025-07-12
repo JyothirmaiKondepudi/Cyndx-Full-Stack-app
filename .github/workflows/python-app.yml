@@ -71,9 +71,20 @@ jobs:
       run: |
           IMAGE_URI=${{ secrets.ECR_REGISTRY }}/flask-backend:${{ github.sha }}
           docker tag flask-backend:latest $IMAGE_URI
-    - name : 
+    - name : Push Docker to ECR
       run: |
           IMAGE_URI=${{ secrets.ECR_REGISTRY }}/flask-backend:${{ github.sha }}
           docker push $IMAGE_URI
-
+    - name : Deploy docker image into lambda
+      run : |
+          aws lambda update-function-code \
+            --function-name form_management_service \
+            --image-uri ${{ secrets.ECR_REGISTRY }}/flask-backend:${{ github.sha }}
+    - name : Invoke Lambda for testing purpose
+      run : |
+          aws lambda invoke\
+            --function-name form_management_service \
+            --cli-binary-format raw-in-base64-out
+            --payload '{}'
+            response.json
       
