@@ -66,11 +66,14 @@ jobs:
           aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{secrets.ECR_REGISTRY}}
     - name : Build Docker Image
       run: |
-          docker build -t flask-backend .
+          docker build -t flask-backend backend/
     - name: Tag Docker Image
       run: |
-          docker tag flask-backend:latest ${{secrets.ECR_REGISTRY}}/${{ github.sha }}
+          IMAGE_URI=${{ secrets.ECR_REGISTRY }}/flask-backend:${{ github.sha }}
+          docker tag flask-backend:latest $IMAGE_URI
     - name : 
       run: |
-          docker push ${{secrets.ECR_REGISTRY}}/${{ github.sha }}
+          IMAGE_URI=${{ secrets.ECR_REGISTRY }}/flask-backend:${{ github.sha }}
+          docker push $IMAGE_URI
+
       
