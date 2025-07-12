@@ -83,7 +83,7 @@ jobs:
     - name : Invoke Lambda for testing purpose
       run : |
           aws lambda invoke\
-            -- functiona-name form_management_service \
+            --functiona-name form_management_service \
             --payload '{}'
             response.json
       
