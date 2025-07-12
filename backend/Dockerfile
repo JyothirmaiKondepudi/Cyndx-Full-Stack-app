@@ -10,4 +10,5 @@ COPY . .
 
 EXPOSE 5000
 
+ENTRYPOINT ["awslambdaric"]
 CMD ["lambda_handler.lambda_handler"]
