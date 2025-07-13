@@ -69,7 +69,7 @@ jobs:
 
     - name: Build amd64 image
       run: |
-        docker build --platform linux/amd64 \
+        docker buildx build --platform linux/amd64 \
           -t ${{ secrets.ECR_REGISTRY }}:amd64 \
           backend/
 
