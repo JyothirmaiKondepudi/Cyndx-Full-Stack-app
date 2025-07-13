@@ -4,6 +4,11 @@ import json
 import awsgi
 from config import *
 from app import create_app
+import logging
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
 
 def get_secret():
     
@@ -14,6 +19,7 @@ def get_secret():
     )
 
     try:
+        
         get_secret_value_response = client.get_secret_value(
             SecretId="flask/prod/postgres"
         )
@@ -28,8 +34,10 @@ def get_secret():
 
 
 def lambda_handler(event, context):
-    
+    logger.info("Starting handler")
+    logger.info("Fetching secret…")
     secret = get_secret()
+    logger.info("Secret fetched, connecting to DB…")
     username = secret["username"]
     password = secret["password"]
     host   = "forms.c2x2y28s29kk.us-east-1.rds.amazonaws.com"
@@ -38,4 +46,5 @@ def lambda_handler(event, context):
             f"postgresql+pg8000://{username}:{password}@{host}:5432/{dbname}"
         )
     _app_cache= create_app(ProductionConfig)
+    logger.info("DB query done, about to return")
     return awsgi.response(_app_cache, event, context)
