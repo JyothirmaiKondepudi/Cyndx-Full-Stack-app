@@ -68,7 +68,7 @@ jobs:
       run: |
           docker build \
             --platform linux/amd64 \
-            -t ${{ secrets.ECR_REGISTRY }}/flask-backend:${{ github.sha }} \
+            -t flask-backend:latest \
             backend/
     - name: Tag Docker Image
       run: |
