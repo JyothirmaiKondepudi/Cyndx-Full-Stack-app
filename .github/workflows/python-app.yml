@@ -67,7 +67,7 @@ jobs:
 
     - name: Build amd64 image
       run: |
-          docker build -t backend .
+          docker build -t backend ./backend
 
     - name: Push amd64 image
       run: |
