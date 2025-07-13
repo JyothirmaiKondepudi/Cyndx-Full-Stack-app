@@ -80,10 +80,6 @@ jobs:
     - name: Update Lambda to AMD image
       if: steps.build-and-push.outputs.arch == 'amd64' 
       run: |
-        aws lambda update-function-configuration \
-          --function-name form_management_service \
-          --architectures x86_64
-
         aws lambda update-function-code \
           --function-name form_management_service \
           --image-uri ${{secrets.ECR_REGISTRY}}:amd64
