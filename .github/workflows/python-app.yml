@@ -75,5 +75,18 @@ jobs:
       run: |
           IMAGE_URI=${{ secrets.ECR_REGISTRY }}/flask-backend:${{ github.sha }}
           docker push $IMAGE_URI
+    - name: Update Lambda function with pushed docker image
+      run : |
+          aws lambda update-fucntion-code --function-name form_management_service --image-uri $IMAGE_URI
+    - name: Sleep for 15
+          sleep 15
+    - name: Invoke API Gateway
+      run: |
+          aws apigateway test-invoke-method \
+            --rest-api-id ${{ secrets.API_ID }} \
+            --resource-id ${{ secrets.RESOURCE_ID }} \
+            --http-method GET \
+            --path-with-query-string "/api/submissions"
+
 
       
