@@ -71,7 +71,7 @@ jobs:
       run: |
           IMAGE_URI=${{ secrets.ECR_REGISTRY }}/flask-backend:${{ github.sha }}
           docker tag flask-backend:latest $IMAGE_URI
-    - name : 
+    - name : Push to ECRs
       run: |
           IMAGE_URI=${{ secrets.ECR_REGISTRY }}/flask-backend:${{ github.sha }}
           docker push $IMAGE_URI
@@ -86,6 +86,7 @@ jobs:
       run: |
           aws apigateway test-invoke-method \
             --rest-api-id ${{ secrets.API_ID }} \
+            --region ${{ secrets.AWS_REGION }} \
             --resource-id ${{ secrets.RESOURCE_ID }} \
             --http-method GET \
             --path-with-query-string "/api/submissions"
