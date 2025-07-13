@@ -77,7 +77,7 @@ jobs:
           docker push $IMAGE_URI
     - name: Update Lambda function with pushed docker image
       run : |
-          aws lambda update-fucntion-code --function-name form_management_service --image-uri $IMAGE_URI
+          aws lambda update-function-code --function-name form_management_service --image-uri $IMAGE_URI
     - name: Sleep for 15
       run: |
           sleep 15
