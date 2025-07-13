@@ -64,37 +64,24 @@ jobs:
     - name: Login to ECR
       run : |
           aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{secrets.ECR_REGISTRY}}
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
 
     - name: Build amd64 image
       run: |
-        docker build --platform linux/amd64 \
-          -t ${{ secrets.ECR_REGISTRY }}:amd64 \
-          backend/
+          docker build -t backend .
 
     - name: Push amd64 image
       run: |
         docker push ${{ secrets.ECR_REGISTRY }}:amd64
-    - name: Install AWS CLI v2
+    - name: Update Lambda to AMD image
+      if: steps.build-and-push.outputs.arch == 'amd64'  # or tag check
       run: |
-        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-        unzip awscliv2.zip
-        sudo ./aws/install --update
+        aws lambda update-function-configuration \
+          --function-name form_management_service \
+          --architectures x86_64
 
-    - name: Verify AWS CLI version
-      run: aws --version
-
-    - name: Update Lambda function \
-      run: |    
-          aws lambda update-function-configuration \
-            --function-name form_management_service \
-            --architectures x86_64
-
-    - name: Deploy docker image to Lambda
-      run: |
-          IMAGE_URI =${{ secrets.ECR_REGISTRY }}:amd64
-          aws lambda update-function-code --function-name form_management_service --image-uri $IMAGE_URI
+        aws lambda update-function-code \
+          --function-name form_management_service \
+          --image-uri "${{ secrets.ECR_REGISTRY }}:amd64"
 
     - name: Sleep for 15
       run: |
