@@ -68,12 +68,14 @@ jobs:
     - name: Build amd64 image
       run: |
           docker build -t backend ./backend
-
+    - name: Tag Docker image
+      run : |
+          docker tag backend:amd64 ./backend
     - name: Push amd64 image
       run: |
-        docker push ${{ secrets.ECR_REGISTRY }}:amd64
+        docker push backend:amd64
     - name: Update Lambda to AMD image
-      if: steps.build-and-push.outputs.arch == 'amd64'  # or tag check
+      if: steps.build-and-push.outputs.arch == 'amd64' 
       run: |
         aws lambda update-function-configuration \
           --function-name form_management_service \
@@ -81,7 +83,7 @@ jobs:
 
         aws lambda update-function-code \
           --function-name form_management_service \
-          --image-uri "${{ secrets.ECR_REGISTRY }}:amd64"
+          --image-uri "backend:amd64"
 
     - name: Sleep for 15
       run: |
