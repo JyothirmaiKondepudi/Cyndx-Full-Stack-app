@@ -86,13 +86,13 @@ jobs:
       run: aws --version
 
     - name: Update Lambda function \
-      run : |    
+      run: |    
           aws lambda update-function-configuration \
             --function-name form_management_service \
             --architectures x86_64
 
     - name: Deploy docker image to Lambda
-      run : |
+      run: |
           IMAGE_URI =${{ secrets.ECR_REGISTRY }}:amd64
           aws lambda update-function-code --function-name form_management_service --image-uri $IMAGE_URI
 
