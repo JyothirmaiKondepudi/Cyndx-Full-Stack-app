@@ -71,12 +71,12 @@ jobs:
     - name: Tag Docker image
       run : |
           docker tag backend:latest ${{secrets.ECR_REGISTRY}}:amd64
-    - name: Push amd64 image
-      id: build-and-push
-      
+    - id: build-and-push 
+      name: Push amd64 image
       run: |
           docker push ${{secrets.ECR_REGISTRY}}:amd64
           echo "arch=amd64" >> $GITHUB_OUTPUT
+       
     - name: Update Lambda to AMD image
       if: steps.build-and-push.outputs.arch == 'amd64' 
       run: |
