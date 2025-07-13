@@ -74,7 +74,7 @@ jobs:
     - name: Push amd64 image
       run: |
           docker push ${{secrets.ECR_REGISTRY}}:amd64
-          echo "::set-output name=arch::amd64"
+          echo "arch=amd64" >> $GITHUB_OUTPUT
     - name: Update Lambda to AMD image
       if: steps.build-and-push.outputs.arch == 'amd64' 
       run: |
