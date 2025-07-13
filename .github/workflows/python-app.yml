@@ -74,13 +74,13 @@ jobs:
         push: true
         platforms: linux/amd64
         tags: |
-          ${{ secrets.ECR_REGISTRY }}/backend:${{ github.sha }}
-          ${{ secrets.ECR_REGISTRY }}/backend:latest
-          ${{ secrets.ECR_REGISTRY }}/backend:amd64
+          ${{ secrets.ECR_REGISTRY }}:${{ github.sha }}
+          ${{ secrets.ECR_REGISTRY }}:latest
+          ${{ secrets.ECR_REGISTRY }}:amd64
 
     - name: Update Lambda function with pushed docker image
       run : |
-          IMAGE_URI=${{ secrets.ECR_REGISTRY }}/backend:amd64
+          IMAGE_URI=${{ secrets.ECR_REGISTRY }}:amd64
           aws lambda update-function-code --function-name form_management_service --image-uri $IMAGE_URI
     - name: Sleep for 15
       run: |
