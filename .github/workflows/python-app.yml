@@ -79,6 +79,7 @@ jobs:
       run : |
           aws lambda update-fucntion-code --function-name form_management_service --image-uri $IMAGE_URI
     - name: Sleep for 15
+      run: |
           sleep 15
     - name: Invoke API Gateway
       run: |
