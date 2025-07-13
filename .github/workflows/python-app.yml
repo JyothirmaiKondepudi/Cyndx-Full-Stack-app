@@ -67,16 +67,15 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
 
-    - name: Build & push amd64 image to ECR
-      uses: docker/build-push-action@v4
-      with:
-        context: backend/
-        push: true
-        platforms: linux/amd64
-        tags: |
-          ${{ secrets.ECR_REGISTRY }}:${{ github.sha }}
-          ${{ secrets.ECR_REGISTRY }}:latest
-          ${{ secrets.ECR_REGISTRY }}:amd64
+    - name: Build amd64 image
+      run: |
+        docker build --platform linux/amd64 \
+          -t ${{ secrets.ECR_REGISTRY }}:amd64 \
+          backend/
+
+    - name: Push amd64 image
+      run: |
+        docker push ${{ secrets.ECR_REGISTRY }}:amd64
 
     - name: Update Lambda function with pushed docker image
       run : |
