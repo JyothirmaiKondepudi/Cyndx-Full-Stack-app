@@ -11,24 +11,24 @@ logger.setLevel(logging.INFO)
 
 
 def get_secret():
-    
+    logger.info("🔑 Entering get_secret()")
     session = boto3.session.Session()
     client = session.client(
         service_name='secretsmanager',
         region_name="us-east-1"
     )
-
     try:
-        
         get_secret_value_response = client.get_secret_value(
             SecretId="flask/prod/postgres"
         )
+        logger.info("🔑 AWS SDK call to Secrets Manager returned")
     except ClientError as e:
         # For a list of exceptions thrown, see
         # https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_GetSecretValue.html
         raise e
 
     secret= json.loads(get_secret_value_response['SecretString'])
+    logger.info("🔑 Parsed secret, returning to handler")
     return secret
 
 
