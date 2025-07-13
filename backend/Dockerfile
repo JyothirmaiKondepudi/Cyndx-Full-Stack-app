@@ -1,8 +1,6 @@
 FROM python:3.12.11-slim
 
-WORKDIR /app
-
-COPY requirements.txt ./
+COPY requirements.txt ${LAMBDA_TASK_ROOT}
 
 RUN pip install -r requirements.txt
 
