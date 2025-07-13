@@ -13,6 +13,7 @@ load_dotenv()
 def create_app(config_class = DevelopmentConfig):
     flask_app= Flask(__name__)
     CORS(flask_app)
+    
     flask_app.config.from_object(config_class)
     db.init_app(flask_app)
 

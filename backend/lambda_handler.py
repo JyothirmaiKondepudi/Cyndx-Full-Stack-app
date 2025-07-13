@@ -42,6 +42,8 @@ def lambda_handler(event, context):
     password = secret["password"]
     host   = "forms.c2x2y28s29kk.us-east-1.rds.amazonaws.com"
     dbname = "postgres"
+    logger.info("📡 About to connect to RDS at %s:%s", db_host, db_port)
+
     ProductionConfig.SQLALCHEMY_DATABASE_URI = (
             f"postgresql+pg8000://{username}:{password}@{host}:5432/{dbname}"
         )
