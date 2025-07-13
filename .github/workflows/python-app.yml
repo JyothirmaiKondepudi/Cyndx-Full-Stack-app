@@ -69,7 +69,7 @@ jobs:
 
     - name: Build amd64 image
       run: |
-        docker buildx build --platform linux/amd64 \
+        docker build --platform linux/amd64 \
           -t ${{ secrets.ECR_REGISTRY }}:amd64 \
           backend/
 
@@ -77,10 +77,17 @@ jobs:
       run: |
         docker push ${{ secrets.ECR_REGISTRY }}:amd64
 
-    - name: Update Lambda function with pushed docker image
+    - name: Update Lambda function \
+      run : |    
+          aws lambda update-function-configuration \
+            --function-name form_management_service \
+            --architectures x86_64
+
+    - name: Deploy docker image to Lambda
       run : |
-          IMAGE_URI=${{ secrets.ECR_REGISTRY }}:amd64
+          IMAGE_URI =${{ secrets.ECR_REGISTRY }}:amd64
           aws lambda update-function-code --function-name form_management_service --image-uri $IMAGE_URI
+          
     - name: Sleep for 15
       run: |
           sleep 15
