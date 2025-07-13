@@ -67,9 +67,9 @@ jobs:
     - name : Build Docker Image
       run: |
           docker build \
-          --platform linux/amd64 \
-          -t $\{ { secrets.ECR_REGISTRY } \}/flask-backend:$\{ { github.sha } \} \
-          backend/
+            --platform linux/amd64 \
+            -t ${{ secrets.ECR_REGISTRY }}/flask-backend:${{ github.sha }} \
+            backend/
     - name: Tag Docker Image
       run: |
           IMAGE_URI=${{ secrets.ECR_REGISTRY }}/flask-backend:${{ github.sha }}
