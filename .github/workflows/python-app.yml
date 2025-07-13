@@ -70,7 +70,7 @@ jobs:
           docker build -t backend ./backend
     - name: Tag Docker image
       run : |
-          docker tag backend:amd64 
+          docker tag backend:latest backend:amd64
     - name: Push amd64 image
       run: |
         docker push backend:amd64
